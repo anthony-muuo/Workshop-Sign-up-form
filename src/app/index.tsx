@@ -9,6 +9,7 @@ import {
 } from "../contexts/SignUpContextProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomDatePicker from "../components/CustomDatePicker";
+import CustomCheckBox from "../components/CustomCheckBox";
 
 export default function App() {
   const { onSubmit, setSignupDetails, signupDetails } = useSignUp();
@@ -36,6 +37,10 @@ export default function App() {
           secureTextEntry
         />
         <CustomDatePicker name="dob" label="Date of Birth" />
+        <CustomCheckBox
+          name="terms"
+          label="I accept the terms and privacy policy"
+        />
 
         <Pressable
           style={styles.button}

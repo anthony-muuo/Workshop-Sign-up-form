@@ -6,10 +6,13 @@ import { router } from "expo-router";
 export const SignUpInfoSchema = z
   .object({
     fullName: z
-      .string({ message: "full Name is required" })
+      .string({ message: "Full Name is required" })
       .min(3, { message: "Full Name must be longer than 3 characters" }),
     email: z.string().email(),
     dob: z.date(),
+    terms: z.literal(true, {
+      errorMap: () => ({ message: "You must accept the terms to continue" }),
+    }),
     password: z
       .string({
         required_error: "Please enter a password",
@@ -44,10 +47,6 @@ const SignUPContextProvider = ({ children }: React.PropsWithChildren) => {
   const [signupDetails, setSignupDetails] = useState<SignUpInfo | undefined>();
 
   const onSubmit = () => {
-    if (!signupDetails) {
-      console.log("this form is incomplete");
-      return;
-    }
     router.push("/welcome");
   };
 
