@@ -3,18 +3,28 @@ import * as z from "zod";
 import { useState } from "react";
 import { router } from "expo-router";
 
-export const SignUpInfoSchema = z.object({
-  fullName: z
-    .string({ message: "full Name is required" })
-    .min(3, { message: "Full Name must be longer than 3 characters" }),
-  email: z.string().email(),
-  password: z
-    .string()
-    .min(3, { message: "password must be longer than 3 characters" }),
-  confirm: z
-    .string()
-    .min(3, { message: "password must be longer than 3 characters" }),
-});
+export const SignUpInfoSchema = z
+  .object({
+    fullName: z
+      .string({ message: "full Name is required" })
+      .min(3, { message: "Full Name must be longer than 3 characters" }),
+    email: z.string().email(),
+    dob: z.date(),
+    password: z
+      .string({
+        required_error: "Please enter a password",
+      })
+      .min(3, { message: "password must be longer than 3 characters" }),
+    confirm: z
+      .string({
+        required_error: "Please confirm your password",
+      })
+      .min(3, { message: "password must be longer than 3 characters" }),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Password do not match",
+    path: ["confirm"],
+  });
 
 export type SignUpInfo = z.infer<typeof SignUpInfoSchema>;
 

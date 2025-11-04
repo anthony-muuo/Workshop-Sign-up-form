@@ -8,6 +8,7 @@ import {
   useSignUp,
 } from "../contexts/SignUpContextProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
+import CustomDatePicker from "../components/CustomDatePicker";
 
 export default function App() {
   const { onSubmit, setSignupDetails, signupDetails } = useSignUp();
@@ -28,8 +29,13 @@ export default function App() {
       <FormProvider {...form}>
         <CustomTextInput label="Full Name" name="fullName" />
         <CustomTextInput label="Email" name="email" />
-        <CustomTextInput label="Password" name="password" />
-        <CustomTextInput label="Confirm Password" name="confirm" />
+        <CustomTextInput label="Password" name="password" secureTextEntry />
+        <CustomTextInput
+          label="Confirm Password"
+          name="confirm"
+          secureTextEntry
+        />
+        <CustomDatePicker name="dob" label="Date of Birth" />
 
         <Pressable
           style={styles.button}
