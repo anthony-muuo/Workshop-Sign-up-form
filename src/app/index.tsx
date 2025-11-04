@@ -10,6 +10,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomDatePicker from "../components/CustomDatePicker";
 import CustomCheckBox from "../components/CustomCheckBox";
+import Keyboard from "../components/Keyboard";
 
 export default function App() {
   const { onSubmit, setSignupDetails, signupDetails } = useSignUp();
@@ -25,41 +26,43 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>SignUp</Text>
-      <FormProvider {...form}>
-        <CustomTextInput label="Full Name" name="fullName" />
-        <CustomTextInput label="Email" name="email" />
-        <CustomTextInput label="Password" name="password" secureTextEntry />
-        <CustomTextInput
-          label="Confirm Password"
-          name="confirm"
-          secureTextEntry
-        />
-        <CustomDatePicker name="dob" label="Date of Birth" />
-        <CustomCheckBox
-          name="terms"
-          label="I accept the terms and privacy policy"
-        />
+    <Keyboard>
+      <View style={styles.container}>
+        <Text style={styles.title}>SignUp</Text>
+        <FormProvider {...form}>
+          <CustomTextInput label="Full Name" name="fullName" />
+          <CustomTextInput label="Email" name="email" inputMode="email" />
+          <CustomTextInput label="Password" name="password" secureTextEntry />
+          <CustomTextInput
+            label="Confirm Password"
+            name="confirm"
+            secureTextEntry
+          />
+          <CustomDatePicker name="dob" label="Date of Birth" />
+          <CustomCheckBox
+            name="terms"
+            label="I accept the terms and privacy policy"
+          />
 
-        <Pressable
-          style={styles.button}
-          onPress={form.handleSubmit(handleSubmit)}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "500",
-              fontSize: 16,
-              letterSpacing: 1.5,
-            }}
+          <Pressable
+            style={styles.button}
+            onPress={form.handleSubmit(handleSubmit)}
           >
-            Submit
-          </Text>
-        </Pressable>
-      </FormProvider>
-      <StatusBar style="auto" />
-    </View>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "500",
+                fontSize: 16,
+                letterSpacing: 1.5,
+              }}
+            >
+              Submit
+            </Text>
+          </Pressable>
+        </FormProvider>
+        <StatusBar style="auto" />
+      </View>
+    </Keyboard>
   );
 }
 
