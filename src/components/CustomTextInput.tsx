@@ -1,35 +1,43 @@
 import { TextInput, View, StyleSheet, Text } from "react-native";
 import { ComponentProps } from "react";
+import { useController } from "react-hook-form";
 
 type CustomTextInputProps = {
   label?: string;
+  name: string;
 } & ComponentProps<typeof TextInput>;
 
 const CustomTextInput = ({
   label,
+  name,
   ...textInputProps
 }: CustomTextInputProps) => {
-  const error = { message: "This field is Required" };
+  const {
+    field: { value, onChange, onBlur },
+    fieldState: { error },
+  } = useController({ name });
+
   return (
     <View style={{ paddingVertical: 6 }}>
-      <Text
-        style={{
-          fontWeight: "600",
-          color: "dimgray",
-        }}
-      >
-        {label}
-      </Text>
+      {label && (
+        <Text
+          style={{
+            fontWeight: "600",
+            color: "dimgray",
+          }}
+        >
+          {label}
+        </Text>
+      )}
       <TextInput
         {...textInputProps}
-        style={[
-          styles.input,
-          textInputProps.style,
-          error.message && styles.errorInput,
-        ]}
+        value={value}
+        onBlur={onBlur}
+        onChangeText={onChange}
+        style={[styles.input, textInputProps.style, error && styles.errorInput]}
       />
       <Text style={{ color: "crimson", height: 17 }} numberOfLines={1}>
-        {error.message}
+        {error?.message}
       </Text>
     </View>
   );
@@ -38,7 +46,6 @@ const CustomTextInput = ({
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
-    color: "gainsboro",
     borderRadius: 5,
     width: "100%",
     marginTop: 4,
